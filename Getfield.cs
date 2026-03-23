@@ -4,6 +4,7 @@ using System;
 using XRL;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace BeastReflector
 {
@@ -60,7 +61,11 @@ namespace BeastReflector
         {
             object value = field.GetValue(instance);
             string valueMsg = value == null ? "null" : value.ToString();
-            IComponent<GameObject>.AddPlayerMessage($"field {field.FieldType.Name} {field.Name} in type {field.DeclaringType.Name} value is {valueMsg} on object {pick.DisplayName} ID: {pick.ID}");
+            StringBuilder text = new();
+            text.Append($"{field.FieldType.Name} \"{field.Name}\"\n");
+            text.Append($"in type {instance.GetType()}\n");
+            text.Append($"has value {valueMsg}");
+            IComponent<GameObject>.AddPlayerMessage(text.ToString());
         }
     }
 }
