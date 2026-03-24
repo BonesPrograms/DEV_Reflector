@@ -4,35 +4,37 @@ using System;
 using XRL;
 using System.Linq;
 using System.Reflection;
+using XRL.UI;
 
 namespace BeastReflector
 {
     [HasWishCommand]
 
-    internal class SetFieldCommand : FieldReflective
+    public class SetFieldCommand : FieldReflective
     {
 
         [WishCommand("setfield")] //next up- a really crappy method runner
 
-        static void SetField(string input)
+        static void SetFieldGone()
         {
-            string[] strings = input.Split(":");
-            if (strings.Length < 3)
-                IComponent<GameObject>.AddPlayerMessage("Incomplete parameters. parameters: Type:Field:Value or gameobject:Field:Value");
-            else if (PickTarget(The.Player, "setfield", out var pick))
+            Popup.Show("Setfield has been replaced by the wish \"field\".\nTo get with field, format is type:fieldname.\nTo set with field, format is type:fieldname:value");
+        }
+
+        public static void SetField(string[] inputs, GameObject pick)
+        {
+
+            string typeName = inputs[0];
+            string fieldName = inputs[1];
+            string value = inputs[2];
+            if (typeName.Equals("GameObject", StringComparison.OrdinalIgnoreCase))
             {
-                string typeName = strings[0];
-                string fieldName = strings[1];
-                string value = strings[2];
-                if (typeName.Equals("GameObject", StringComparison.OrdinalIgnoreCase))
-                {
-                    FieldInfo field = FindGameObjectField(fieldName, pick);
-                    if (field != null)
-                        ValidateField(field, value, pick, pick);
-                }
-                else
-                    FindField(typeName, fieldName, value, pick);
+                FieldInfo field = FindGameObjectField(fieldName, pick);
+                if (field != null)
+                    ValidateField(field, value, pick, pick);
             }
+            else
+                FindField(typeName, fieldName, value, pick);
+
         }
         static void FindField(string typeName, string fieldName, string value, GameObject pick)
         {

@@ -5,37 +5,35 @@ using XRL;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using XRL.UI;
 
 namespace BeastReflector
 {
     [HasWishCommand]
 
-    internal class GetFieldCommand : FieldReflective
+    public class GetFieldCommand : FieldReflective
     {
 
-        [WishCommand("readfield")]
-        static void ReadField(string text) => GetField(text);
-
         [WishCommand("getfield")]
-
-        static void GetField(string text)
+        static void GetFieldGone()
         {
-            string[] inputs = text.Split(":");
-            if (inputs.Length < 2)
-                IComponent<GameObject>.AddPlayerMessage("Incomplete parameters. params: type:fieldname or gameobject:fieldname");
-            else if (PickTarget(The.Player, "getfield", out var pick))
+            Popup.Show("Getfield has been replaced by the wish \"field\".\nTo get with field, format is type:fieldname.\nTo set with field, format is type:fieldname:value");
+        }
+
+        public static void GetField(string[] inputs, GameObject pick)
+        {
+
+            string typeName = inputs[0];
+            string fieldName = inputs[1];
+            if (typeName.Equals("gameobject", StringComparison.OrdinalIgnoreCase))
             {
-                string typeName = inputs[0];
-                string fieldName = inputs[1];
-                if (typeName.Equals("gameobject", StringComparison.OrdinalIgnoreCase))
-                {
-                    FieldInfo field = FindGameObjectField(fieldName, pick);
-                    if (field != null)
-                        DisplayField(field, pick, pick);
-                }
-                else
-                    GetFieldWish(typeName, fieldName, pick);
+                FieldInfo field = FindGameObjectField(fieldName, pick);
+                if (field != null)
+                    DisplayField(field, pick, pick);
             }
+            else
+                GetFieldWish(typeName, fieldName, pick);
+
         }
 
 

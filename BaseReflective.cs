@@ -17,7 +17,7 @@ namespace BeastReflector
 
     }
 
-    internal abstract class FieldReflective : BaseReflective
+    public abstract class FieldReflective : BaseReflective
     {
         protected static bool LoopForField(string fieldName, object instance, Type limit, out FieldInfo field)
         {
@@ -45,7 +45,7 @@ namespace BeastReflector
             return field;
         }
     }
-    internal abstract class BaseReflective
+    public abstract class BaseReflective
     {
 
         public const BindingFlags Flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Static;

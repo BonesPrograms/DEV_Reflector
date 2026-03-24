@@ -12,7 +12,7 @@ using System.Text;
 namespace BeastReflector
 {
     [HasWishCommand]
-    internal class InvokeCommand : BaseReflective
+    public class InvokeCommand : BaseReflective
     {
         [WishCommand("invoke")]
 
@@ -253,8 +253,8 @@ namespace BeastReflector
             if (failedParse)
             {
                 Popup.Show($"Could not parse {input} for {param.ParameterType} {param.Name}");
-                string newInput = GetInput(token, param);
-                ParseInput(token, newInput, i, inputs, param);
+                input = GetInput(token, param);
+                ParseInput(token, input, i, inputs, param);
             }
         }
 
