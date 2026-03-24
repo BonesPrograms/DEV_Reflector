@@ -15,7 +15,7 @@ namespace BeastReflector
     {
 
         [WishCommand("getfield")]
-        static void GetFieldGone()
+        static void GetFieldGone(string text)
         {
             Popup.Show("Getfield has been replaced by the wish \"field\".\nTo get with field, format is type:fieldname.\nTo set with field, format is type:fieldname:value");
         }

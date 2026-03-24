@@ -15,7 +15,7 @@ namespace BeastReflector
 
         [WishCommand("setfield")] //next up- a really crappy method runner
 
-        static void SetFieldGone()
+        static void SetFieldGone(string text)
         {
             Popup.Show("Setfield has been replaced by the wish \"field\".\nTo get with field, format is type:fieldname.\nTo set with field, format is type:fieldname:value");
         }
